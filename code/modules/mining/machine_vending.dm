@@ -229,7 +229,8 @@
 		if("Explorer suit")
 			new /obj/item/clothing/suit/hooded/explorer(drop_location)
 			new /obj/item/clothing/mask/gas/explorer(drop_location)
-    qdel(voucher)
+	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
+	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
