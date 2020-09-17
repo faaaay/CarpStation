@@ -44,13 +44,22 @@
 	cost = 10
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/gladiator
+	name = "Gladiator"
+	id = "gladiator"
+	description = "An immortal ash walker, guarding these lands."
+	suffix = "lavaland_surface_gladiator.dmm"
+	cost = 0
+	always_place = TRUE
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/lavaland/ash_walker
 	name = "Ash Walker Nest"
 	id = "ash-walker"
 	description = "A race of unbreathing lizards live here, that run faster than a human can, worship a broken dead city, and are capable of reproducing by something involving tentacles? \
 	Probably best to stay clear."
 	suffix = "lavaland_surface_ash_walker1.dmm"
-	cost = 20
+	cost = 15
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/syndicate_base
@@ -129,6 +138,23 @@
 	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
 	suffix = "lavaland_surface_hierophant.dmm"
 	always_place = TRUE
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/power_collector
+	name = "Power Collector"
+	id = "power_collector"
+	description = "An ancient device intended for collecting Abyssal Power."
+	suffix = "lavaland_surface_power_collector.dmm"
+	cost = 5
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/lavaland/corrupted_system
+	name = "Corrupted System"
+	id = "corrupted_system"
+	description = "A crashed pod, containing a malfunctioning mining mech."
+	suffix = "lavaland_surface_corrupted_system.dmm"
+	always_place = TRUE
+	cost = 0
 	allow_duplicates = FALSE
 
 /datum/map_template/ruin/lavaland/blood_drunk_miner
@@ -222,7 +248,7 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
-  
+
 /datum/map_template/ruin/lavaland/elite_tumor
 	name = "Pulsating Tumor"
 	id = "tumor"
