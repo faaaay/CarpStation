@@ -28,6 +28,7 @@
 		new /datum/data/mining_equipment("Explorer's Webbing",			/obj/item/storage/belt/mining,										500),
 		new /datum/data/mining_equipment("Point Transfer Card",			/obj/item/card/mining_point_card,									500),
 		new /datum/data/mining_equipment("Survival Medipen",			/obj/item/reagent_containers/hypospray/medipen/survival,			500),
+		new /datum/data/mining_equipment("Premium Survival Medipen",	/obj/item/reagent_containers/hypospray/medipen/survival/premium,	2500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",			/obj/item/storage/firstaid/brute,									600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", 		/obj/item/storage/box/minertracker,									600),
 		new /datum/data/mining_equipment("Jaunter",						/obj/item/wormhole_jaunter,											750),
@@ -163,6 +164,9 @@
 			. = TRUE
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/mining_voucher/suit))
+		RedeemSVoucher(I, user)
+		return
 	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
@@ -173,9 +177,13 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
-
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sortList(items)
+	var/items = list(	"Survival Capsule and Explorer's Webbing" = image(icon = 'icons/obj/clothing/belts.dmi', icon_state = "explorer1"),
+						"Resonator Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "resonator"),
+						"Minebot Kit" = image(icon = 'icons/mob/aibots.dmi', icon_state = "mining_drone"),
+						"Extraction and Rescue Kit" = image(icon = 'icons/obj/fulton.dmi', icon_state = "extraction_pack"),
+						"Crusher Kit" = image(icon = 'icons/obj/mining.dmi', icon_state = "crusher"),
+						"Mining Conscription Kit" = image(icon = 'icons/obj/storage.dmi', icon_state = "duffel"))
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
 	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
@@ -199,9 +207,29 @@
 			new /obj/item/twohanded/kinetic_crusher(drop_location)
 		if("Mining Conscription Kit")
 			new /obj/item/storage/backpack/duffelbag/mining_conscript(drop_location)
-
 	SSblackbox.record_feedback("tally", "mining_voucher_redeemed", 1, selection)
 	qdel(voucher)
+
+/obj/machinery/mineral/equipment_vendor/proc/RedeemSVoucher(obj/item/mining_voucher/suit/voucher, mob/redeemer)
+	var/items = list(	"Exo-suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "exo"),
+						"SEVA suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "seva"),
+                        "Explorer suit" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "explorer"))
+
+	var/selection = show_radial_menu(redeemer, src, items, require_near = TRUE, tooltips = TRUE)
+	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+		return
+	var/drop_location = drop_location()
+	switch(selection)
+		if("Exo-suit")
+			new /obj/item/clothing/suit/hooded/explorer/exo(drop_location)
+			new /obj/item/clothing/mask/gas/exo(drop_location)
+		if("SEVA suit")
+			new /obj/item/clothing/suit/hooded/explorer/seva(drop_location)
+			new /obj/item/clothing/mask/gas/seva(drop_location)
+		if("Explorer suit")
+			new /obj/item/clothing/suit/hooded/explorer(drop_location)
+			new /obj/item/clothing/mask/gas/explorer(drop_location)
+    qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
@@ -238,6 +266,10 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/mining_voucher/suit
+	name = "mining suit voucher"
+	desc = "A token to redeem a piece of equipment. Use it on a mining equipment vendor. This one will give you a suit instead of starting kit."
 
 /**********************Mining Point Card**********************/
 

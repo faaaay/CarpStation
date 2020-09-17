@@ -171,6 +171,10 @@
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
 
+	if(!source_atom)
+		qdel(src)
+		return
+
 	if (QDELETED(source_atom))
 		qdel(src)
 		return
