@@ -709,17 +709,18 @@ $(function() {
 
 	//Hey look it's a controller loop!
 	setInterval(function() {
-		if (opts.lastPang + opts.pangLimit < Date.now() && !opts.restarting) { //Every pingLimit
+		if (opts.lastPang + opts.pangLimit < Date.now()) { //Every pingLimit
 				if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
 					opts.noResponse = true;
 					opts.noResponseCount++;
+					Byond.command('.reconnect');
 					internalOutput('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either AFK, experiencing lag or the connection has closed.</div>', 'internal');
 				}
 		} else if (opts.noResponse) { //Previous ping attempt failed ohno
 				$('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
 				opts.noResponse = false;
 		}
-	}, 2000); //2 seconds
+	}, 5000); //2 seconds
 
 
 	/*****************************************

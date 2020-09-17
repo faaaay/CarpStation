@@ -75,31 +75,37 @@
 		if(beaker)
 			to_chat(user, "A beaker is already loaded into the machine.")
 			return
-		if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len ==1) //check if full and allow one reageant only.
-			for(var/X in W.reagents.reagent_list)
-				var/datum/reagent/R = X
-				if(R.reagent_state == SOLID)
-					to_chat(user, "The pool cannot accept reagents in solid form!.")
-					return
-				else
-					beaker =  W
-					user.dropItemToGround(W)
-					W.forceMove(src)
-					to_chat(user, "You add the beaker to the machine!")
-					updateUsrDialog()
-					cur_reagent = "[R.name]"
-					for(var/I in linkedturfs)
-						var/turf/open/pool/P = I
-						if(P.reagents)
-							P.reagents.clear_reagents()
-							P.reagents.add_reagent(R.type, 100)
-					if(GLOB.adminlog)
-						log_game("[key_name(user)] has changed the [src] chems to [R.name]")
-						message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
-					timer = 15
-		else
-			to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
-			return
+		//if(W.reagents.total_volume >= 100 && W.reagents.reagent_list.len ==1) //check if full and allow one reageant only.
+
+		for(var/I in linkedturfs)
+			var/turf/open/pool/P = I
+			if(P.reagents)
+				P.reagents.clear_reagents()
+
+		for(var/X in W.reagents.reagent_list)
+			var/datum/reagent/R = X
+			// if(R.reagent_state == SOLID)
+			// 	to_chat(user, "The pool cannot accept reagents in solid form!.")
+			// 	return
+			// else
+			beaker =  W
+			user.dropItemToGround(W)
+			W.forceMove(src)
+			to_chat(user, "You add the beaker to the machine!")
+			updateUsrDialog()
+			cur_reagent = "[R.name]"
+			for(var/I in linkedturfs)
+				var/turf/open/pool/P = I
+				if(P.reagents)
+					//P.reagents.clear_reagents()
+					P.reagents.add_reagent(R.type, 100, reagtemp = R.specific_heat)
+			if(GLOB.adminlog)
+				log_game("[key_name(user)] has changed the [src] chems to [R.name]")
+				message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
+			timer = 15
+		// else
+		// 	to_chat(user, "<span class='notice'>This machine only accepts full large beakers of one reagent.</span>")
+		// 	return
 	else if(panel_open && is_wire_tool(W))
 		wires.interact(user)
 	else
