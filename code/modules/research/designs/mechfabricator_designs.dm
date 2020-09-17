@@ -565,6 +565,52 @@
 	construction_time = 400
 	category = list("Exosuit Equipment")
 
+//Clarke
+/datum/design/clarke_chassis
+	name = "Exosuit Chassis (\"Clarke\")"
+	id = "clarke_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/clarke
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Clarke")
+
+/datum/design/clarke_torso
+	name = "Exosuit Torso (\"Clarke\")"
+	id = "clarke_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	construction_time = 200
+	category = list("Clarke")
+
+/datum/design/clarke_head
+	name = "Exosuit Head (\"Clarke\")"
+	id = "clarke_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_head
+	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
+	construction_time = 100
+	category = list("Clarke")
+
+/datum/design/clarke_left_arm
+	name = "Exosuit Left Arm (\"Clarke\")"
+	id = "clarke_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_left_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Clarke")
+
+/datum/design/clarke_right_arm
+	name = "Exosuit Right Arm (\"Clarke\")"
+	id = "clarke_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/clarke_right_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Clarke")
+
 /////////////////////////////////////////
 //////////////Borg Upgrades//////////////
 /////////////////////////////////////////

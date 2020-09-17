@@ -42,6 +42,7 @@ Difficulty: Hard
 	speak_emote = list("gurgles")
 	armour_penetration = 40
 	melee_damage = 40
+	faction = list("mining", "boss", "demon")
 	speed = 5
 	move_to_delay = 5
 	retreat_distance = 5
@@ -68,6 +69,12 @@ Difficulty: Hard
 							   /datum/action/innate/megafauna_attack/hallucination_surround,
 							   /datum/action/innate/megafauna_attack/blood_warp)
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
+	var/dont_move //so it wont move in jaunt
+
+	abyss_born = TRUE
+	enraged_type = /mob/living/simple_animal/hostile/megafauna/bubblegum/hard
+	enrage_message = "starts growing bigger as it feels the energy of Abyss flowing in his veins!"
+
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
@@ -105,7 +112,7 @@ Difficulty: Hard
 	chosen_attack_num = 4
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
-	if(charging)
+	if(charging || dont_move)
 		return
 
 	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
@@ -126,12 +133,11 @@ Difficulty: Hard
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
 		blood_warp()
-
 	if(!BUBBLEGUM_SMASH)
 		if(prob(50 + anger_modifier))
 			triple_charge()
 		else
-			slaughterlings()
+			INVOKE_ASYNC(src, .proc/try_bloodattack)
 	else
 		if(prob(50 + anger_modifier))
 			hallucination_charge()
@@ -302,8 +308,13 @@ Difficulty: Hard
 	if(found_bloodpool)
 		visible_message("<span class='danger'>[src] sinks into the blood...</span>")
 		playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+		alpha = 0
+		dont_move = TRUE
+		sleep(rand(2, 4))
 		forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+		alpha = 255
+		dont_move = FALSE
 		visible_message("<span class='danger'>And springs back out!</span>")
 		blood_enrage()
 		return TRUE
@@ -453,6 +464,8 @@ Difficulty: Hard
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
+	if(dont_move)
+		return FALSE
 	update_approach()
 	if(revving_charge)
 		return FALSE
