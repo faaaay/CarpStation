@@ -265,28 +265,28 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/full_version = "[byond_version].[byond_build ? byond_build : "xxx"]"
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[full_version]")
 
-	var/alert_mob_dupe_login = FALSE
-	if(CONFIG_GET(flag/log_access))
-		for(var/I in GLOB.clients)
-			if(!I || I == src)
-				continue
-			var/client/C = I
-			if(C.key && (C.key != key) )
-				var/matches
-				if( (C.address == address) )
-					matches += "IP ([address])"
-				if( (C.computer_id == computer_id) )
-					if(matches)
-						matches += " and "
-					matches += "ID ([computer_id])"
-					alert_mob_dupe_login = TRUE
-				if(matches)
-					if(C)
-						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</span>")
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
-					else
-						message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
-						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+	//var/alert_mob_dupe_login = FALSE
+	//if(CONFIG_GET(flag/log_access))
+		//for(var/I in GLOB.clients)
+			//if(!I || I == src)
+				//continue
+			//var/client/C = I
+			//if(C.key && (C.key != key) )
+				//var/matches
+				//if( (C.address == address) )
+					//matches += "IP ([address])"
+				//if( (C.computer_id == computer_id) )
+					//if(matches)
+						//matches += " and "
+					//matches += "ID ([computer_id])"
+					//alert_mob_dupe_login = TRUE
+				//if(matches)
+					//if(C)
+						//message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)].</span>")
+						//log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)].")
+					//else
+						//message_admins("<span class='danger'><B>Notice: </B></span><span class='notice'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </span>")
+						//log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	if(GLOB.player_details[ckey])
 		player_details = GLOB.player_details[ckey]
@@ -326,9 +326,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	chatOutput.start() // Starts the chat
 
-	if(alert_mob_dupe_login)
-		spawn()
-			alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+	// if(alert_mob_dupe_login)
+	// 	spawn()
+	// 		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -722,7 +722,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(key != sql_key)
 		var/datum/http_request/http = new()
 		http = http.get_request("http://byond.com/members/[ckey]?format=text")
-		
+
 		if(!http)
 			log_world("Failed to connect to byond member page to get changed key for [ckey]")
 			return
