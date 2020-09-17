@@ -175,7 +175,7 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ALLOW_VOTE_RESTART
 
 ## allow players to initate a mode-change start
-ALLOW_VOTE_MODE
+#ALLOW_VOTE_MODE
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -314,7 +314,7 @@ TICKLAG 0.5
 #FPS 20
 
 ## Comment this out to disable automuting
-AUTOMUTE_ON
+# AUTOMUTE_ON
 
 ## Uncomment this to let players see their own notes (they can still be set by admins only)
 SEE_OWN_NOTES
