@@ -25,12 +25,7 @@ GLOBAL_LIST_INIT(no_reagent_statechange_typecache, typecacheof(list(
 ))
 
 GLOBAL_LIST_INIT(statechange_reagent_blacklist, typecacheof(list(
-	/datum/reagent/oxygen,
-	/datum/reagent/nitrogen,
-	/datum/reagent/nitrous_oxide,
-	/datum/reagent/toxin/plasma,
-	/datum/reagent/smoke_powder,
-	/datum/reagent/carbondioxide)
+)
 ))
 
 GLOBAL_LIST_INIT(vaporchange_reagent_blacklist, typecacheof(list(

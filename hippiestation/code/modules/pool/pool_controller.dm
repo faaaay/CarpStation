@@ -79,15 +79,12 @@
 
 		for(var/I in linkedturfs)
 			var/turf/open/pool/P = I
-			if(P.reagents)
-				P.reagents.clear_reagents()
+			P.reagents.clear_reagents()
 
+		var/div = LAZYLEN(W.reagents.reagent_list)
 		for(var/X in W.reagents.reagent_list)
 			var/datum/reagent/R = X
-			// if(R.reagent_state == SOLID)
-			// 	to_chat(user, "The pool cannot accept reagents in solid form!.")
-			// 	return
-			// else
+
 			beaker =  W
 			user.dropItemToGround(W)
 			W.forceMove(src)
@@ -96,9 +93,12 @@
 			cur_reagent = "[R.name]"
 			for(var/I in linkedturfs)
 				var/turf/open/pool/P = I
-				if(P.reagents)
-					//P.reagents.clear_reagents()
-					P.reagents.add_reagent(R.type, 100, reagtemp = R.specific_heat)
+
+				if(R.reagent_state == VAPOR)
+					P.reagents.add_reagent(R.type, 100/div, reagtemp = 1000)
+				else
+					P.reagents.add_reagent(R.type, 100/div)
+
 			if(GLOB.adminlog)
 				log_game("[key_name(user)] has changed the [src] chems to [R.name]")
 				message_admins("[key_name_admin(user)] has changed the [src] chems to [R.name].")
