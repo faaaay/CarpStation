@@ -35,7 +35,6 @@
 		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
-        /obj/item/mining_voucher/suit=1,\
 		/obj/item/stack/marker_beacon/ten=1)
 
 	backpack = /obj/item/storage/backpack/explorer
@@ -56,7 +55,6 @@
 		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,
 		/obj/item/mining_voucher=1,
-        /obj/item/mining_voucher/suit=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
 		/obj/item/gun/energy/kinetic_accelerator=1,\
 		/obj/item/stack/marker_beacon/ten=1)

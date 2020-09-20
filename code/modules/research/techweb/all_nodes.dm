@@ -807,14 +807,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/clarke
-	id = "mecha_clarke"
-	display_name = "EXOSUIT: Clarke"
-	description = "Clarke exosuit designs"
-	prereq_ids = list("engineering")
-	design_ids = list("clarke_chassis", "clarke_torso", "clarke_head", "clarke_left_arm", "clarke_right_arm", "clarke_main", "clarke_peri")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/gygax
 	id = "mech_gygax"
 	display_name = "EXOSUIT: Gygax"

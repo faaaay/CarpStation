@@ -100,16 +100,8 @@
 		AM.forceMove(T)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			if(ishuman(L))
-				var/mob/living/carbon/human/H = L
-				if(istype(H.get_item_by_slot(SLOT_BACK), /obj/item/parachute))
-					var/obj/item/parachute/para = H.get_item_by_slot(SLOT_BACK)
-					para.deploy(T)
-					return
-
-			L.Knockdown(100)
+			L.Paralyze(100)
 			L.adjustBruteLoss(30)
-			L.adjustBruteLoss(55) //Buffed it, was too weak
 		falling_atoms -= AM
 
 	else
